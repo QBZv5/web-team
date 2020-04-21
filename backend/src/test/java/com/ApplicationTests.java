@@ -20,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TaskControllerTest {
@@ -41,9 +42,8 @@ public class TaskControllerTest {
                 .andDo(MockMvcResultHandlers.print()) //andDo
                 .andExpect(jsonPath("$.status").value("success"))
                 .andReturn();//andReturn
-	}
-	
-	/**
+    }
+    /**
      * 测试 add 接口
      * */
     @Test
@@ -59,7 +59,8 @@ public class TaskControllerTest {
                 .andReturn(); //andReturn
     }
 
-	/**
+
+    /**
      * 测试 delete 接口
      * */
     @Test
@@ -72,9 +73,9 @@ public class TaskControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.status").value("success"))
                 .andReturn(); //andReturn
-	}
-	
-	/**
+    }
+
+     /**
      * 测试 update 接口
      * */
     @Test
@@ -88,9 +89,9 @@ public class TaskControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.status").value("success"))
                 .andReturn(); //andReturn
-	}
-	
-	    /**
+    }
+
+    /**
      * 测试 IndexController
      * */
     @Test
