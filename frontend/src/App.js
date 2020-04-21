@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Header from './components/header'
 import Content from './components/content'
-import Footer from './components/footer' 
+import Footer from './components/footer'
 
 import './App.css';
 class App extends Component {
@@ -12,63 +13,86 @@ class App extends Component {
       todo: {
         list: [],
         add: (item) => {
-          this.setState(preState => {
-            let newTodo = preState.todo
-            let list = Object.assign([], newTodo.list)
-            list.push({
-              text: item,
-              id: new Date().getTime(),
-              status: 'working'
-            })
-            newTodo.list = list
-            return {
-              todo: newTodo
-            }
-          })
+          axios.get("/add?item="+item).then(response => {
+            axios.get('/query').then(response => {
+              this.setState(preState => {
+                let newTodo = preState.todo
+                let list = response.data
+                console.log(list)
+                newTodo.list = list
+                return {
+                  todo: newTodo
+                }
+              });
+            }).catch(function(err) {
+              console.log(err);
+            });
+          }).catch(function(err) {
+            console.log(err)
+          });
         },
         delete: (id) => {
-          this.setState(preState => {
-            let newTodo = preState.todo
-            let list = newTodo.list.filter(item => id !== item.id)
-            newTodo.list = list
-            return {
-              todo: newTodo
-            }
-          })
+          axios.get("/del?id="+id).then(response => {
+            axios.get('/query').then(response => {
+              this.setState(preState => {
+                let newTodo = preState.todo
+                let list = response.data
+                console.log(list)
+                newTodo.list = list
+                return {
+                  todo: newTodo
+                }
+              });
+            }).catch(function(err) {
+              console.log(err);
+            });
+          }).catch(function(err) {
+            console.log(err)
+          });
         },
-        finish: (id) => {
+        update: (id, content) => {
           this.setState(preState => {
-            let newTodo = preState.todo
-            let list = newTodo.list.map(item => {
-              if(item.id === id) {
-                item.status = 'finished'
-              }
-              return item
-            })
-            newTodo.list = list
-            return {
-              todo: newTodo
-            }
-          })
-        },
-        clear: () => {
-          this.setState(preState => {
-            let newTodo = preState.todo
-            newTodo.list = []
-            return {
-              todo: newTodo
-            }
+            axios.get("/update?id="+id+"&cont=" + content).then(response => {
+              axios.get('/query').then(response => {
+                this.setState(preState => {
+                  let newTodo = preState.todo
+                  let list = response.data
+                  console.log(list)
+                  newTodo.list = list
+                  return {
+                    todo: newTodo
+                  }
+                });
+              }).catch(function(err) {
+                console.log(err);
+              });
+            }).catch(function(err) {
+              console.log(err)
+            });
           })
         }
       }
     }
+    axios.get('/query').then(response => {
+      this.setState(preState => {
+        let newTodo = preState.todo
+        let list = response.data
+        console.log(list)
+        newTodo.list = list
+        return {
+          todo: newTodo
+        }
+      });
+    }).catch(function(err) {
+      console.log(err);
+    });
   }
   render() {
     return (
       <div className="App">
         <Header todo={this.state.todo}></Header>
         <Content todo={this.state.todo}></Content>
-        <Footer clear={this.state.todo.clear}></Footer>
+        <Footer></Footer>
       </div>
     );
   }
