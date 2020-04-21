@@ -59,5 +59,19 @@ public class TaskControllerTest {
                 .andReturn(); //andReturn
     }
 
+	/**
+     * 测试 delete 接口
+     * */
+    @Test
+    public void deleteTaskTest() throws  Exception {
+        request = MockMvcRequestBuilders.delete("/task/del")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .params(paramsMap);
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.status").value("success"))
+                .andReturn(); //andReturn
+    }
 
 }
