@@ -41,6 +41,23 @@ public class TaskControllerTest {
                 .andDo(MockMvcResultHandlers.print()) //andDo
                 .andExpect(jsonPath("$.status").value("success"))
                 .andReturn();//andReturn
+	}
+	
+	/**
+     * 测试 add 接口
+     * */
+    @Test
+    public void addTaskTest() throws  Exception{
+
+        request = MockMvcRequestBuilders.post("/task/add")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .params(paramsMap);
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.status").value("success"))
+                .andReturn(); //andReturn
     }
+
 
 }
