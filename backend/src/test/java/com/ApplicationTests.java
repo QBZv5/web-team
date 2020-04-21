@@ -22,11 +22,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApplicationTests {
+public class TaskControllerTest {
 
-	@Test
-	public void contextLoads() {
-		System.out.println("hello world");
-	}
+    @Autowired
+    private WebApplicationContext wac;
+    private MockMvc mvc;
+    private MultiValueMap<String, String> paramsMap;
+    private RequestBuilder request;
+
+
+    /**
+     * 测试 query 接口
+     * */
+    @Test
+    public void taskListTest() throws  Exception{
+        mvc.perform(MockMvcRequestBuilders.get("/task/query"))
+                .andExpect(MockMvcResultMatchers.status().isOk()) //andExpect
+                .andDo(MockMvcResultHandlers.print()) //andDo
+                .andExpect(jsonPath("$.status").value("success"))
+                .andReturn();//andReturn
+    }
 
 }
