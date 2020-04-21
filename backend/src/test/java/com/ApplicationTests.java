@@ -88,6 +88,19 @@ public class TaskControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.status").value("success"))
                 .andReturn(); //andReturn
+	}
+	
+	    /**
+     * 测试 IndexController
+     * */
+    @Test
+    public void testIndexController() throws Exception {
+        // 测试UserController
+        taskListTest();  // 查
+        addTaskTest();  // 增
+        taskListTest();  // 查
+        deleteTaskTest(); // 删
+        updateTaskTest(); // 改
     }
 
 }
