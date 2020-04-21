@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@RequestMapping("/task")
 @RestController
 public class IndexController {
     private static final Logger bizLogger = LoggerFactory.getLogger(IndexController.class);
